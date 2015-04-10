@@ -87,7 +87,7 @@ function getHeight() {
 }
 
 
-/* CLASS NAME */
+/* CLASS */
 Element.prototype.addClass = function( classname ) {
     var cn = this.className;
     //test for existance
@@ -108,8 +108,23 @@ Element.prototype.removeClass = function(className) {
     this.className = this.className.replace(regexp, "$2");
 
 }
+Element.prototype.toggleClass = function(className){
+    if (!this || !className){
+        return;
+    }
 
-
+    var classString = this.className, nameIndex = classString.indexOf(className);
+    if (nameIndex == -1) {
+        classString += ' ' + className;
+    }
+    else {
+        classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+className.length);
+    }
+    this.className = classString;
+}
+Element.prototype.hasClass = function(className) {
+    return this.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(this.className);
+};
 /* GET SELECTORS */
 
 function ID(elementID)
@@ -123,13 +138,13 @@ function QS(element){
   return document.querySelector(element);
 }
 Element.prototype.getQS = function(selector){
-  this.querySelector(selector);
+  return this.querySelector(selector);
 }
 function QSA(element){
   return document.querySelectorAll(element);
 }
 Element.prototype.getQSA = function(selector){
-  this.querySelectorAll(selector);
+  return this.querySelectorAll(selector);
 }
 function CLASS(element, elem){
   if(elem && elem != undefined){
@@ -145,7 +160,7 @@ Element.prototype.getCLASS = function(element){
 function NAME(element){
     return document.getElementsByName(element);
 }
-Element.prototype.getNAME = function(){
+Element.prototype.getNAME = function(element){
   return this.getElementsByName(element);
 }
 function TAG(element){
@@ -154,7 +169,20 @@ function TAG(element){
 Element.prototype.getTAG = function(){
   return this.getElementsByTagName(element);
 }
-
+Element.prototype.getAttr = function(attribute)
+{
+  var matchingElements = [];
+  var allElements = document.getElementsByTagName('*');
+  for (var i = 0, n = allElements.length; i < n; i++)
+  {
+    if (allElements[i].getAttribute(attribute) !== null)
+    {
+      // Element exists with attribute. Add to array.
+      matchingElements.push(allElements[i]);
+    }
+  }
+  return matchingElements;
+}
 
 /* VALIDATION */
 
@@ -166,11 +194,11 @@ function validateEmail(email) {
 
 /* PREVENT DEFAULT */
 Element.prototype.stopDefault = function(){
-  e = e || window.event;
-  if (e.preventDefault){
-    e.preventDefault();
+  // e = e || window.event;
+  if (this.preventDefault){
+    this.preventDefault();
   } 
-  e.returnValue = false;  
+  this.returnValue = false;  
 }
 function preventDefault(e) {
   e = e || window.event;
@@ -210,3 +238,4 @@ function isDescendant(parent, child) {
      }
      return false;
 }
+
