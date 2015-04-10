@@ -207,12 +207,14 @@ function preventDefault(e) {
   e.returnValue = false;
 }
 
+<<<<<<< HEAD
 (function(){
 
 }()
 
 
 /* STOP BEFORE CLOSING THE PAGE */
+
 function confirmOnPageExit(e) 
 {
     // If we haven't been passed the event get the window.event
@@ -243,6 +245,7 @@ function isDescendant(parent, child) {
      return false;
 }
 
+
 function log(text) {
   if (window.console) {
      window.console.log(text);
@@ -263,3 +266,4 @@ function addMultipleListeners(element,events,handler,useCapture,args){
     element.addEventListener(events[i],handlerFn,useCapture);
   }
 }
+
