@@ -207,7 +207,7 @@ function preventDefault(e) {
   e.returnValue = false;
 }
 
-<<<<<<< HEAD
+
 (function(){
 
 }()
