@@ -208,10 +208,6 @@ function preventDefault(e) {
 }
 
 
-(function(){
-
-}()
-
 
 /* STOP BEFORE CLOSING THE PAGE */
 
