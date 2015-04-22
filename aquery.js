@@ -48,7 +48,7 @@ Element.prototype.removeEvent = function(event, func){
 
 /* AJAX */ 
 
-function ajaxRequest(url, callback) {
+function ajaxPOST(url, callback, message) {
     var XHR = null;
     if (XMLHttpRequest) {
         XHR = new XMLHttpRequest();
@@ -60,13 +60,54 @@ function ajaxRequest(url, callback) {
             if (XHR.status == 200) {
                 callback(XHR);
             } else {
-                // alert("fel på servern");
+                alert("fel på servern");
+            }
+        }
+    }
+    XHR.open("POST", url, true);
+    XHR.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    XHR.send(message);
+}
+
+function ajaxGET(url, callback) {
+    var XHR = null;
+    if (XMLHttpRequest) {
+        XHR = new XMLHttpRequest();
+    } else {
+        XHR = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    XHR.onreadystatechange = function() {
+        if (XHR.readyState == 4 || XHR.readyState == "complete") {
+            if (XHR.status == 200) {
+                callback(XHR);
+            } else {
+                alert("fel på servern");
             }
 
         }
     }
     XHR.open("GET", url, true);
     XHR.send(null);
+}
+
+function ajaxIMG(url, callback, message) {
+    var XHR = null;
+    if (XMLHttpRequest) {
+        XHR = new XMLHttpRequest();
+    } else {
+        XHR = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    XHR.onreadystatechange = function() {
+        if (XHR.readyState == 4 || XHR.readyState == "complete") {
+            if (XHR.status == 200) {
+                callback(XHR);
+            } else {
+                alert("fel på servern");
+            }
+        }
+    }
+    XHR.open("POST", url, true);
+    XHR.send(message);
 }
 
 
@@ -190,7 +231,11 @@ function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 } 
-
+function hasLetter(str){
+  // check for characters between a and z
+  // i flag makes it case insensitive
+  return /[a-zåäö]/i.test(str);
+}
 
 /* PREVENT DEFAULT */
 Element.prototype.stopDefault = function(){
@@ -206,11 +251,6 @@ function preventDefault(e) {
     e.preventDefault();
   e.returnValue = false;
 }
-
-<<<<<<< HEAD
-(function(){
-
-}()
 
 
 /* STOP BEFORE CLOSING THE PAGE */
@@ -252,6 +292,7 @@ function log(text) {
   }
 }
 
+// Needs modification
 function addMultipleListeners(element,events,handler,useCapture,args){
   if (!(events instanceof Array)){
     throw 'addMultipleListeners: '+
@@ -267,3 +308,40 @@ function addMultipleListeners(element,events,handler,useCapture,args){
   }
 }
 
+
+// Gets the number of pixels from the top of the window
+Element.prototype.getOffset = function(){
+  var _x = 0;
+  var _y = 0;
+  while( this && !isNaN( this.offsetLeft ) && !isNaN( this.offsetTop ) ) {
+      _x += this.offsetLeft - this.scrollLeft;
+      _y += this.offsetTop - this.scrollTop;
+      // el = this.offsetParent;
+  }
+  return { top: _y, left: _x };
+
+}
+
+// Gets the number of pixels from the top of the document
+Element.prototype.absoluteOffset = function(){
+  var bodyRect = document.body.getBoundingClientRect();
+  var elemRect = this.getBoundingClientRect();
+  var offsetTop = elemRect.top - bodyRect.top;
+  var offsetLeft = elemRect.left - bodyRect.left;
+  return {
+    top: offsetTop,
+    left: offsetLeft
+  }
+}
+
+
+Element.prototype.removeElem = function(elem){
+  this.remove(this.selectedIndex);
+}
+function createElem(elem){
+  return document.createElement(elem);
+}
+
+Element.prototype.insertAfter = function(newNode) {
+    this.parentNode.insertBefore(newNode, this.nextSibling);
+}
