@@ -252,6 +252,10 @@ function preventDefault(e) {
   e.returnValue = false;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 77b02b9fc64f02819f356e51354314078f3c52df
 
 /* STOP BEFORE CLOSING THE PAGE */
 
