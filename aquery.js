@@ -32,18 +32,18 @@ Element.prototype.addEvent = function(evnt, func) {
     if (this.addEventListener){ // W3C DOM
         this.addEventListener(evnt, func, false);
     }else if (this.attachEvent) { // IE DOM
-        this.attachEvent("on" + evnt, func);
+        this.attachEvent('on' + evnt, func);
     } else { // No much to do
         this[evnt] = func;
     }
-}
+};
 Element.prototype.removeEvent = function(event, func){
     if (this.removeEventListener) {                   // For all major browsers, except IE 8 and earlier
         this.removeEventListener(event, func);
     } else if (this.detachEvent) {                    // For IE 8 and earlier versions
-        this.detachEvent("on"+event, func);
+        this.detachEvent('on'+event, func);
     }
-}
+};
 
 
 /* AJAX */ 
@@ -53,19 +53,19 @@ function ajaxPOST(url, callback, message) {
     if (XMLHttpRequest) {
         XHR = new XMLHttpRequest();
     } else {
-        XHR = new ActiveXObject("Microsoft.XMLHTTP");
+        XHR = new ActiveXObject('Microsoft.XMLHTTP');
     }
     XHR.onreadystatechange = function() {
-        if (XHR.readyState == 4 || XHR.readyState == "complete") {
-            if (XHR.status == 200) {
+        if (XHR.readyState === 4 || XHR.readyState === 'complete') {
+            if (XHR.status === 200) {
                 callback(XHR);
             } else {
-                alert("fel på servern");
+                alert('fel på servern');
             }
         }
-    }
-    XHR.open("POST", url, true);
-    XHR.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    };
+    XHR.open('POST', url, true);
+    XHR.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     XHR.send(message);
 }
 
@@ -74,19 +74,19 @@ function ajaxGET(url, callback) {
     if (XMLHttpRequest) {
         XHR = new XMLHttpRequest();
     } else {
-        XHR = new ActiveXObject("Microsoft.XMLHTTP");
+        XHR = new ActiveXObject('Microsoft.XMLHTTP');
     }
     XHR.onreadystatechange = function() {
-        if (XHR.readyState == 4 || XHR.readyState == "complete") {
-            if (XHR.status == 200) {
+        if (XHR.readyState === 4 || XHR.readyState === 'complete') {
+            if (XHR.status === 200) {
                 callback(XHR);
             } else {
-                alert("fel på servern");
+                alert('fel på servern');
             }
 
         }
-    }
-    XHR.open("GET", url, true);
+    };
+    XHR.open('GET', url, true);
     XHR.send(null);
 }
 
@@ -95,18 +95,18 @@ function ajaxIMG(url, callback, message) {
     if (XMLHttpRequest) {
         XHR = new XMLHttpRequest();
     } else {
-        XHR = new ActiveXObject("Microsoft.XMLHTTP");
+        XHR = new ActiveXObject('Microsoft.XMLHTTP');
     }
     XHR.onreadystatechange = function() {
-        if (XHR.readyState == 4 || XHR.readyState == "complete") {
-            if (XHR.status == 200) {
+        if (XHR.readyState === 4 || XHR.readyState === 'complete') {
+            if (XHR.status === 200) {
                 callback(XHR);
             } else {
-                alert("fel på servern");
+                alert('fel på servern');
             }
         }
-    }
-    XHR.open("POST", url, true);
+    };
+    XHR.open('POST', url, true);
     XHR.send(message);
 }
 
@@ -115,14 +115,18 @@ function ajaxIMG(url, callback, message) {
 
 function getHeight() {
     xHeight = null;
-    if (window.screen != null)
-        xHeight = window.screen.availHeight;
+    if (window.screen !== null){
+      xHeight = window.screen.availHeight;
+    }   
 
-    if (window.innerHeight != null)
-        xHeight = window.innerHeight;
-
-    if (document.body != null)
-        xHeight = document.body.clientHeight;
+    if (window.innerHeight !== null){
+      xHeight = window.innerHeight;
+    }
+      
+    if (document.body !== null){
+      xHeight = document.body.clientHeight;
+    }
+        
 
     return xHeight;
 }
@@ -132,39 +136,39 @@ function getHeight() {
 Element.prototype.addClass = function( classname ) {
     var cn = this.className;
     //test for existance
-    if( cn.indexOf( classname ) != -1 ) {
+    if( cn.indexOf( classname ) !== -1 ) {
         return;
     }
     //add a space if the element already has class
-    if( cn != '' ) {
+    if( cn !== '' ) {
         classname = ' '+classname;
     }
     this.className = cn+classname;
-}
+};
 Element.prototype.removeClass = function(className) {
     if (!this || !this.className) {
         return false;
     }
-    var regexp = new RegExp("(^|\\s)" + className + "(\\s|$)", "g");
-    this.className = this.className.replace(regexp, "$2");
+    var regexp = new RegExp('(^|\\s)' + className + '(\\s|$)', 'g');
+    this.className = this.className.replace(regexp, '$2');
 
-}
+};
 Element.prototype.toggleClass = function(className){
     if (!this || !className){
         return;
     }
 
     var classString = this.className, nameIndex = classString.indexOf(className);
-    if (nameIndex == -1) {
+    if (nameIndex === -1) {
         classString += ' ' + className;
     }
     else {
         classString = classString.substr(0, nameIndex) + classString.substr(nameIndex+className.length);
     }
     this.className = classString;
-}
+};
 Element.prototype.hasClass = function(className) {
-    return this.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(this.className);
+    return this.className && new RegExp('(^|\\s)' + className + '(\\s|$)').test(this.className);
 };
 /* GET SELECTORS */
 
@@ -174,21 +178,21 @@ function ID(elementID)
 }
 Element.prototype.getID = function(id){
   this.getElementById(id);
-}
+};
 function QS(element){
   return document.querySelector(element);
 }
 Element.prototype.getQS = function(selector){
   return this.querySelector(selector);
-}
+};
 function QSA(element){
   return document.querySelectorAll(element);
 }
 Element.prototype.getQSA = function(selector){
   return this.querySelectorAll(selector);
-}
+};
 function CLASS(element, elem){
-  if(elem && elem != undefined){
+  if(elem && elem !== undefined){
     return elem.getElementsByClassName(element);
   }
   else{
@@ -197,19 +201,19 @@ function CLASS(element, elem){
 }
 Element.prototype.getCLASS = function(element){
   return this.getElementsByClassName(element);
-}
+};
 function NAME(element){
     return document.getElementsByName(element);
 }
 Element.prototype.getNAME = function(element){
   return this.getElementsByName(element);
-}
+};
 function TAG(element){
     return document.getElementsByTagName(element);
 }
 Element.prototype.getTAG = function(){
   return this.getElementsByTagName(element);
-}
+};
 Element.prototype.getAttr = function(attribute)
 {
   var matchingElements = [];
@@ -223,7 +227,7 @@ Element.prototype.getAttr = function(attribute)
     }
   }
   return matchingElements;
-}
+};
 
 /* VALIDATION */
 
@@ -244,18 +248,15 @@ Element.prototype.stopDefault = function(){
     this.preventDefault();
   } 
   this.returnValue = false;  
-}
+};
 function preventDefault(e) {
   e = e || window.event;
-  if (e.preventDefault)
+  if (e.preventDefault){
     e.preventDefault();
+  }
   e.returnValue = false;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 77b02b9fc64f02819f356e51354314078f3c52df
 
 /* STOP BEFORE CLOSING THE PAGE */
 
@@ -274,14 +275,14 @@ function confirmOnPageExit(e)
 
     // For Chrome, Safari, IE8+ and Opera 12+
     return message;
-};
+}
 
 
 /* IS DESCENDANT */
 function isDescendant(parent, child) {
      var node = child.parentNode;
-     while (node != null) {
-         if (node == parent) {
+     while (node !== null) {
+         if (node === parent) {
              return true;
          }
          node = node.parentNode;
@@ -306,7 +307,7 @@ function addMultipleListeners(element,events,handler,useCapture,args){
   //create a wrapper for to be able to use additional arguments
   var handlerFn = function(e){
     handler.apply(this, args && args instanceof Array ? args : []);
-  }
+  };
   for (var i=0;i<events.length;i+=1){
     element.addEventListener(events[i],handlerFn,useCapture);
   }
@@ -324,7 +325,7 @@ Element.prototype.getOffset = function(){
   }
   return { top: _y, left: _x };
 
-}
+};
 
 // Gets the number of pixels from the top of the document
 Element.prototype.absoluteOffset = function(){
@@ -335,17 +336,23 @@ Element.prototype.absoluteOffset = function(){
   return {
     top: offsetTop,
     left: offsetLeft
-  }
-}
+  };
+};
 
 
 Element.prototype.removeElem = function(elem){
   this.remove(this.selectedIndex);
-}
+};
 function createElem(elem){
   return document.createElement(elem);
 }
 
 Element.prototype.insertAfter = function(newNode) {
     this.parentNode.insertBefore(newNode, this.nextSibling);
+};
+
+function forEach(list,callback) {                   
+  for (var i = 0; i < list.length; i++) {
+    callback.call(list[i]);                       
+  }
 }
