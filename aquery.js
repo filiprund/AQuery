@@ -351,8 +351,11 @@ Element.prototype.insertAfter = function(newNode) {
     this.parentNode.insertBefore(newNode, this.nextSibling);
 };
 
+
+
 function forEach(list,callback) {                   
   for (var i = 0; i < list.length; i++) {
     callback.call(list[i]);                       
   }
 }
+
