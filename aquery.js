@@ -37,6 +37,15 @@ Element.prototype.addEvent = function(evnt, func) {
         this[evnt] = func;
     }
 };
+function addEvent(evnt, elem, func) {
+    if (elem.addEventListener) // W3C DOM
+        elem.addEventListener(evnt, func, false);
+    else if (elem.attachEvent) { // IE DOM
+        elem.attachEvent("on" + evnt, func);
+    } else { // No much to do
+        elem[evnt] = func;
+    }
+}
 Element.prototype.removeEvent = function(event, func){
     if (this.removeEventListener) {                   // For all major browsers, except IE 8 and earlier
         this.removeEventListener(event, func);
