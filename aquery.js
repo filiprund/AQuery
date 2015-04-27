@@ -237,6 +237,11 @@ Element.prototype.getAttr = function(attribute)
   return matchingElements;
 };
 
+Element.prototype.setAttr = function(attribute, value){
+  this.setAttribute(attribute, value);
+}
+
+
 /* VALIDATION */
 
 function validateEmail(email) { 
