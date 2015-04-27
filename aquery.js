@@ -25,7 +25,6 @@
 *
 */
 
-
 /* Event Listener */
 
 Element.prototype.addEvent = function(evnt, func) {
