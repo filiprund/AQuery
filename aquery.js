@@ -73,9 +73,10 @@ function ajaxPOST(url, callback, message) {
         }
     };
     XHR.open('POST', url, true);
-    XHR.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    
     XHR.send(message);
 }
+
 
 function ajaxGET(url, callback) {
     var XHR = null;
@@ -115,6 +116,7 @@ function ajaxIMG(url, callback, message) {
         }
     };
     XHR.open('POST', url, true);
+    XHR.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     XHR.send(message);
 }
 
@@ -309,6 +311,11 @@ function log(text) {
      window.console.log(text);
   }
 }
+function dir(text) {
+  if (window.console) {
+     window.console.dir(text);
+  }
+}
 
 // Needs modification
 function addMultipleListeners(element,events,handler,useCapture,args){
@@ -389,3 +396,34 @@ function getDate(){
     // CONCAT THE STRINGS IN YYYY-MM-DD FORMAT
     var datestring = yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);   
 }
+function selectText(name) {
+  if (document.selection) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(QS(name));
+    range.select();
+  } else if (window.getSelection) {
+    var range = document.createRange();
+    range.selectNode(QS(name));
+    window.getSelection().addRange(range);
+  }
+}
+Element.prototype.selectText = function(){
+  if (document.selection) {
+    var range = document.body.createTextRange();
+    if(this.id){
+      range.moveToElementText(QS('#'+this.id));
+    }else{
+
+      range.moveToElementText(QS('.'+this.className));
+    }
+    range.select();
+  } else if (window.getSelection) {
+    var range = document.createRange();
+    if(this.id){
+      range.selectNode(QS('#'+this.id));
+    }else{
+      range.selectNode(QS('.'+this.className));
+    }
+    window.getSelection().addRange(range);
+  }
+};
